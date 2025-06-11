@@ -1,8 +1,13 @@
 package finalLab;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import java.io.*;
 
 import finalLab.Controller.AuthController;
 import finalLab.Controller.BookingController;
@@ -11,15 +16,6 @@ import finalLab.Controller.SnackController;
 import finalLab.Controller.TicketController;
 import finalLab.Model.User;
 import finalLab.Service.MovieService;
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class Main extends Application {
     public Stage primaryStage;
@@ -106,9 +102,13 @@ public class Main extends Application {
         File moviesFile = new File("movies.txt");
         if (!moviesFile.exists()) {
             try (PrintWriter writer = new PrintWriter(moviesFile)) {
+                writer.println("Kimetsu no Yaiba: Infinity Castle|Fantasy|192|10:00,13:30,17:00,20:30");
                 writer.println("Avengers: Endgame|Action|181|10:00,13:00,16:00,19:00");
+                writer.println("20th Century Girl|Romance|150|12.00,15:30,19:30,23:30");
                 writer.println("Spider-Man: No Way Home|Action|148|11:00,14:00,17:00,20:00");
+                writer.println("Pengabdi Setan 2|Horor|175|08.00,12:00,15:00,22:00");
                 writer.println("The Batman|Action|176|09:00,12:00,15:00,18:00");
+                writer.println("Pengepungan di Bukit Duri|Thriller|161|11:30,14:30,17:30,20:30");
                 writer.println("Top Gun: Maverick|Action|130|10:30,13:30,16:30,19:30");
             } catch (IOException e) {
                 showAlert("Error", "Failed to initialize movies data");

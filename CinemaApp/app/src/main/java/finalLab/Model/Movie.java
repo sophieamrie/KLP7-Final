@@ -8,7 +8,10 @@ public class Movie {
     private int duration;
     private List<String> schedules;
     private String posterPath;
+    private String trailerPath;
+    private String id;
 
+    
     
     
     public Movie(String title, String genre, int duration, List<String> schedules, String posterPath) {
@@ -17,6 +20,13 @@ public class Movie {
         this.duration = duration;
         this.schedules = schedules;
         this.posterPath = posterPath;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
     
     public String getTitle() {
@@ -57,6 +67,13 @@ public class Movie {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
+    }
+    public String getTrailerPath() {
+        return trailerPath;
+    }
+
+    public void setTrailerPath(String trailerPath) {
+        this.trailerPath = trailerPath;
     }
     
     @Override

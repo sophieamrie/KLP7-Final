@@ -1,0 +1,518 @@
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749363332930
+Date           : 2025-06-08 14:15:32
+Customer       : salsa
+Movie          : Avengers: Endgame
+Date           : 2025-06-08
+Schedule       : 19:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50,000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749363361920
+Date           : 2025-06-08 14:16:01
+Customer       : salsa
+Movie          : Avengers: Endgame
+Date           : 2025-06-08
+Schedule       : 19:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50,000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749437803517
+Date           : 2025-06-09 10:56:43
+Customer       : Nabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749438288506
+Date           : 2025-06-09 11:04:48
+Customer       : Nabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749438633840
+Date           : 2025-06-09 11:10:33
+Customer       : Nabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749438869982
+Date           : 2025-06-09 11:14:29
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749439115491
+Date           : 2025-06-09 11:18:35
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749439800913
+Date           : 2025-06-09 11:30:00
+Customer       : NabilaSalsabila
+Movie          : Spider-Man: No Way Home
+Date           : 2025-06-13
+Schedule       : 14:00
+Seat           : E5
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749439998834
+Date           : 2025-06-09 11:33:18
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749440183455
+Date           : 2025-06-09 11:36:23
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-13
+Schedule       : 19:00
+Seat           : E4
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749440585536
+Date           : 2025-06-09 11:43:05
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 19:00
+Seat           : E4
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749441315731
+Date           : 2025-06-09 11:55:15
+Customer       : NabilaSalsabila
+Movie          : Top Gun: Maverick
+Date           : 2025-06-09
+Schedule       : 10:30
+Seat           : A1
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749442148787
+Date           : 2025-06-09 12:09:08
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : C4, D5, E6
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749444235116
+Date           : 2025-06-09 12:43:55
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-09
+Schedule       : 10:00
+Seat           : A2, A3
+Ticket Quantity: 2
+Ticket Price   : 2 x Rp 50.000 = Rp 100.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 100.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749533708286
+Date           : 2025-06-10 13:35:08
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-10
+Schedule       : 13:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749533743173
+Date           : 2025-06-10 13:35:43
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-10
+Schedule       : 13:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749540394337
+Date           : 2025-06-10 15:26:34
+Customer       : NabilaSalsabila
+Movie          : Avengers: Endgame
+Date           : 2025-06-10
+Schedule       : 10:00
+Seat           : D4
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749603274677
+Date           : 2025-06-11 08:54:34
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : B5
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - 1x Pepsi (Rp 15.000)
+Total Amount   : Rp 65.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749616437539
+Date           : 2025-06-11 12:33:57
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : D5
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749617398536
+Date           : 2025-06-11 12:49:58
+Customer       : Zahra
+Movie          : The Batman
+Date           : 2025-06-11
+Schedule       : 09:00
+Seat           : A3
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749617474022
+Date           : 2025-06-11 12:51:14
+Customer       : NabilaSalsabila
+Movie          : The Batman
+Date           : 2025-06-11
+Schedule       : 09:00
+Seat           : A3
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749618001290
+Date           : 2025-06-11 13:00:01
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749618313003
+Date           : 2025-06-11 13:05:13
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749618388793
+Date           : 2025-06-11 13:06:28
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749618564629
+Date           : 2025-06-11 13:09:24
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749618590483
+Date           : 2025-06-11 13:09:50
+Customer       : Zahra
+Movie          : Avengers: Endgame
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : B1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749642069866
+Date           : 2025-06-11 19:41:09
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749645130623
+Date           : 2025-06-11 20:32:10
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749645609065
+Date           : 2025-06-11 20:40:09
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749646675649
+Date           : 2025-06-11 20:57:55
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-12
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749647947347
+Date           : 2025-06-11 21:19:07
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749647971630
+Date           : 2025-06-11 21:19:31
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749648633307
+Date           : 2025-06-11 21:30:33
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+
+|========== MOVIE TICKET ==========|
+Ticket ID      : TKT1749648649910
+Date           : 2025-06-11 21:30:49
+Customer       : Zahra
+Movie          : Kimetsu no Yaiba: Infinity Castle
+Date           : 2025-06-11
+Schedule       : 10:00
+Seat           : A1
+Ticket Quantity: 1
+Ticket Price   : 1 x Rp 50.000 = Rp 50.000
+Snacks         :
+  - No snacks
+Total Amount   : Rp 50.000
+Status         : PAID
+|==================================|
+

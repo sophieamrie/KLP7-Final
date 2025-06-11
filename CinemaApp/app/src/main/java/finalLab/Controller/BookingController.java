@@ -19,12 +19,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import finalLab.Service.playTrailer;
+import java.net.URL;
 
 public class BookingController {
-    private static final String[] SEAT_ROWS = {"A", "B", "C", "D", "E"};
-    private static final int SEATS_PER_ROW = 8;
-    private static final Map<String, Set<String>> BOOKED_SEATS = new HashMap<>();
-    
     private static final String PRIMARY_COLOR = "#2c3e50";
     private static final String SECONDARY_COLOR = "#34495e";
     private static final String SUCCESS_COLOR = "#4caf50";
@@ -35,6 +33,7 @@ public class BookingController {
     private final User currentUser;
     private final MovieService movieService;
     private SnackController snackController;
+    private SeatBookingController seatBookingController;
 
     private Movie selectedMovie;
     private String selectedDate;
@@ -47,13 +46,14 @@ public class BookingController {
     private String paymentMethod;
     private boolean paymentCompleted;
 
-    private Label selectedSeatsDisplayLabel;
-
     public BookingController(Main mainApp, User currentUser) {
         this.mainApp = Objects.requireNonNull(mainApp, "Main app cannot be null");
         this.primaryStage = mainApp.getPrimaryStage();
         this.currentUser = Objects.requireNonNull(currentUser, "Current user cannot be null");
         this.movieService = mainApp.getMovieService();
+        
+        // Initialize SeatBookingController
+        this.seatBookingController = new SeatBookingController(mainApp, currentUser, this);
     }
 
     public void showMoviesList() {
@@ -108,36 +108,11 @@ public class BookingController {
         if (!validateSelection()) {
             return;
         }
-        try {
-            VBox root = createBaseLayout();
-            
-            Label titleLabel = createStyledLabel("SELECT SEATS", "20px", "white", true);
-            
-            LocalDate date = LocalDate.parse(selectedDate);
-            String displayDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            Label infoLabel = createStyledLabel(
-                selectedMovie.getTitle() + " - " + displayDate + " - " + selectedSchedule,
-                "14px", "white", false
-                );
-                
-            VBox seatBox = createSeatSelectionBox();
-                
-            VBox headerBox = new VBox(titleLabel, infoLabel);
-            headerBox.setAlignment(Pos.CENTER);
-            root.getChildren().addAll(headerBox, seatBox);
-            setScene(root, 600, 550);
-        } catch (Exception e) {
-            handleError("Error showing seat selection", e);
-        }
+        // Delegate to SeatBookingController
+        seatBookingController.showSeatSelection(selectedMovie, selectedDate, selectedSchedule);
     }
 
-    public void confirmSeatBooking() {
-        if (selectedMovie != null && selectedDate != null && selectedSchedule != null && !selectedSeats.isEmpty()) {
-            String key = getBookingKey(selectedMovie, selectedDate, selectedSchedule);
-            BOOKED_SEATS.computeIfAbsent(key, k -> new HashSet<>()).addAll(selectedSeats);
-        }
-    }
-
+    // Getters
     public Movie getSelectedMovie() { return selectedMovie; }
     public String getSelectedDate() { return selectedDate; }
     public String getSelectedSchedule() { return selectedSchedule; }
@@ -150,8 +125,13 @@ public class BookingController {
     public String getPaymentMethod() { return paymentMethod; }
     public boolean isPaymentCompleted() { return paymentCompleted; }
 
+    // Setters
     public void setSnackController(SnackController snackController) {
         this.snackController = snackController;
+        // Also set it for SeatBookingController
+        if (seatBookingController != null) {
+            seatBookingController.setSnackController(snackController);
+        }
     }
 
     public void setSelectedSeats(Set<String> seats) {
@@ -171,6 +151,14 @@ public class BookingController {
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
     public void setPaymentCompleted(boolean completed) { this.paymentCompleted = completed; }
 
+    // Public method for SeatBookingController to access
+    public void confirmSeatBooking() {
+        // This method can be called by SeatBookingController when seats are confirmed
+        // Implementation moved to SeatBookingController but can be called from here if needed
+        if (seatBookingController != null) {
+            seatBookingController.confirmSeatBooking();
+        }
+    }
 
     private boolean validateSelection() {
         if (selectedMovie == null) {
@@ -192,15 +180,6 @@ public class BookingController {
         System.err.println(message + ": " + e.getMessage());
         e.printStackTrace();
         mainApp.showAlert("Error", message + ". Please try again.");
-    }
-
-    private String getBookingKey(Movie movie, String date, String schedule) {
-        return movie.getTitle() + "_" + date + "_" + schedule;
-    }
-
-    private Set<String> getBookedSeats(Movie movie, String date, String schedule) {
-        String key = getBookingKey(movie, date, schedule);
-        return BOOKED_SEATS.getOrDefault(key, new HashSet<>());
     }
 
     private VBox createBaseLayout() {
@@ -289,6 +268,42 @@ public class BookingController {
             StackPane.setAlignment(badgeArea, Pos.TOP_LEFT);
             posterStack.getChildren().add(badgeArea);
 
+            // Tombol trailer di bagian bawah poster (overlay)
+            String trailerPath = getTrailerPath(movie.getTitle());
+            if (trailerPath != null) {
+                Button trailerBtn = new Button("▶ Trailer");
+                trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; " +
+                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                  "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;");
+                
+                trailerBtn.setOnMouseEntered(e -> 
+                    trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.9); -fx-text-fill: white; " +
+                                      "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                      "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
+                
+                trailerBtn.setOnMouseExited(e -> 
+                    trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; " +
+                                      "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                      "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
+                
+                trailerBtn.setOnAction(e -> {
+                    try {
+                        System.out.println("Playing trailer: " + trailerPath);
+                        finalLab.Service.playTrailer.show(trailerPath);
+                    } catch (Exception ex) {
+                        System.err.println("Error playing trailer: " + ex.getMessage());
+                        ex.printStackTrace();
+                        mainApp.showAlert("Error", "Tidak dapat memutar trailer. File mungkin tidak ditemukan.");
+                    }
+                });
+                
+                VBox trailerContainer = new VBox(trailerBtn);
+                trailerContainer.setAlignment(Pos.CENTER);
+                trailerContainer.setPadding(new Insets(0, 0, 10, 0));
+                StackPane.setAlignment(trailerContainer, Pos.BOTTOM_CENTER);
+                posterStack.getChildren().add(trailerContainer);
+            }
+
             posterArea.getChildren().add(posterStack);
         } else {
             createFallbackPoster(posterArea, movie);
@@ -299,25 +314,64 @@ public class BookingController {
 
     private void createFallbackPoster(VBox posterArea, Movie movie) {
         posterArea.setStyle("-fx-background-color: #ff6b6b; -fx-background-radius: 12;");
-        
+
+        // BAGIAN: Badge Usia
         HBox badgeArea = createAgeRatingBadge(movie);
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        badgeArea.getChildren().add(spacer);
 
+        // BAGIAN: Judul Film
         VBox titleArea = new VBox();
         titleArea.setAlignment(Pos.CENTER);
         titleArea.setPadding(new Insets(15));
-
+        
         Label movieTitle = new Label(movie.getTitle());
         movieTitle.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-alignment: center;");
         movieTitle.setWrapText(true);
         titleArea.getChildren().add(movieTitle);
 
-        Region spacer2 = new Region();
-        VBox.setVgrow(spacer2, Priority.ALWAYS);
-
-        posterArea.getChildren().addAll(badgeArea, spacer2, titleArea);
+        String trailerPath = getTrailerPath(movie.getTitle());
+        VBox trailerArea = new VBox();
+        trailerArea.setAlignment(Pos.CENTER);
+        trailerArea.setPadding(new Insets(0, 10, 15, 10));
+        
+        if (trailerPath != null) {
+            Button trailerBtn = new Button("Lihat Trailer");
+            trailerBtn.setStyle("-fx-background-color: white; -fx-text-fill: #ff6b6b; " +
+                              "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                              "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;");
+            
+            // Hover effect untuk tombol trailer
+            trailerBtn.setOnMouseEntered(e -> 
+                trailerBtn.setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: #ff6b6b; " +
+                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                  "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
+            
+            trailerBtn.setOnMouseExited(e -> 
+                trailerBtn.setStyle("-fx-background-color: white; -fx-text-fill: #ff6b6b; " +
+                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                  "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
+            
+            trailerBtn.setOnAction(e -> {
+                try {
+                    System.out.println("Playing trailer: " + trailerPath);
+                    finalLab.Service.playTrailer.show(trailerPath);
+                } catch (Exception ex) {
+                    System.err.println("Error playing trailer: " + ex.getMessage());
+                    ex.printStackTrace();
+                    mainApp.showAlert("Error", "Tidak dapat memutar trailer. File mungkin tidak ditemukan.");
+                }
+            });
+            
+            trailerArea.getChildren().add(trailerBtn);
+        } else {
+            // Jika tidak ada trailer, tampilkan label info
+            Label noTrailerLabel = new Label("Trailer tidak tersedia");
+            noTrailerLabel.setStyle("-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 10px;");
+            trailerArea.getChildren().add(noTrailerLabel);
+        }
+        posterArea.getChildren().addAll(badgeArea, spacer, titleArea, trailerArea);
     }
 
     private HBox createAgeRatingBadge(Movie movie) {
@@ -363,11 +417,59 @@ public class BookingController {
 
     private String getPosterFileName(String movieTitle) {
         Map<String, String> posterMap = new HashMap<>();
+        posterMap.put("Kimetsu no Yaiba: Infinity Castle", "kimetsu_no_yaiba.jpg");
         posterMap.put("Avengers: Endgame", "avengers_endgame.jpg");
+        posterMap.put("20th Century Girl", "century_girls.jpg");
         posterMap.put("Spider-Man: No Way Home", "spiderman_no_way_home.jpg");
+        posterMap.put("Pengabdi Setan 2", "pengabdi_setan.jpg");
         posterMap.put("The Batman", "the_batman.jpg");
+        posterMap.put("Pengepungan di Bukit Duri", "bukit_duri.jpg");
         posterMap.put("Top Gun: Maverick", "top_gun_maverick.jpg");
         return posterMap.getOrDefault(movieTitle, "default_poster.jpg");
+    }
+
+    private String getTrailerPath(String movieTitle) {
+        Map<String, String> trailerMap = new HashMap<>();
+        trailerMap.put("Kimetsu no Yaiba: Infinity Castle", "/trailers/kimetsu_trailer.mp4");
+        trailerMap.put("Avengers: Endgame", "/trailers/avengers_trailer.mp4");
+        trailerMap.put("20th Century Girl", "/trailers/century_trailer.mp4");
+        trailerMap.put("Spider-Man: No Way Home", "/trailers/spiderman_trailer.mp4");
+        trailerMap.put("Pengabdi Setan 2", "/trailers/pengabdi_trailer.mp4");
+        trailerMap.put("The Batman", "/trailers/batman_trailer.mp4");
+        trailerMap.put("Pengepungan di Bukit Duri", "/trailers/bukitDuri_trailer.mp4");
+        trailerMap.put("Top Gun: Maverick", "/trailers/topGun_trailer.mp4");
+        String resourcePath = trailerMap.get(movieTitle);
+        
+        if (resourcePath != null) {
+            System.out.println("Found trailer mapping for: " + movieTitle + " -> " + resourcePath);
+            
+            try {
+                // Coba mendapatkan URL dari resource
+                URL resourceUrl = getClass().getResource(resourcePath);
+                if (resourceUrl != null) {
+                    String validUri = resourceUrl.toExternalForm();
+                    System.out.println("✓ Trailer file found with valid URI: " + validUri);
+                    return validUri;
+                } else {
+                    System.err.println("✗ Trailer file not found in resources: " + resourcePath);
+                    
+                    // Coba alternatif path tanpa leading slash
+                    String alternativePath = resourcePath.substring(1); // Remove leading "/"
+                    URL altUrl = getClass().getResource("/" + alternativePath);
+                    if (altUrl != null) {
+                        String validUri = altUrl.toExternalForm();
+                        System.out.println("✓ Found trailer with alternative path: " + validUri);
+                        return validUri;
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error processing trailer path: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No trailer mapping found for: " + movieTitle);
+        }
+        
+        return null;
     }
 
     private VBox createMovieInfoArea(Movie movie) {
@@ -610,149 +712,6 @@ public class BookingController {
         
         selectedBtn.setStyle("-fx-background-color: #1976d2; -fx-text-fill: white; " +
                         "-fx-background-radius: 10; -fx-padding: 10 15;");
-    }
-
-    private VBox createSeatSelectionBox() {
-        VBox seatBox = new VBox(10);
-        seatBox.setAlignment(Pos.CENTER);
-        seatBox.setStyle("-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;");
-
-        Label screenLabel = new Label("🎬 SCREEN 🎬");
-        screenLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; " +
-                        "-fx-background-color: #34495e; -fx-text-fill: white; " +
-                        "-fx-padding: 10; -fx-background-radius: 5;");
-
-        HBox legendBox = createSeatLegend();
-        GridPane seatGrid = createSeatGrid();
-        
-        selectedSeatsDisplayLabel = createStyledLabel("Selected seats: None", "14px", PRIMARY_COLOR, true);
-        
-        HBox buttonBox = createSeatNavigationButtons();
-
-        seatBox.getChildren().addAll(screenLabel, legendBox, seatGrid, selectedSeatsDisplayLabel, buttonBox);
-        return seatBox;
-    }
-
-    private HBox createSeatLegend() {
-        HBox legendBox = new HBox(20);
-        legendBox.setAlignment(Pos.CENTER);
-
-        String legendStyle = "-fx-font-size: 12px; -fx-text-fill: #333;";
-        
-        Label availableLabel = new Label("⬜ Available");
-        Label selectedLabel = new Label("🟦 Selected");
-        Label bookedLabel = new Label("🟥 Booked");
-        
-        availableLabel.setStyle(legendStyle);
-        selectedLabel.setStyle(legendStyle);
-        bookedLabel.setStyle(legendStyle);
-
-        legendBox.getChildren().addAll(availableLabel, selectedLabel, bookedLabel);
-        return legendBox;
-    }
-
-    private GridPane createSeatGrid() {
-        GridPane seatGrid = new GridPane();
-        seatGrid.setAlignment(Pos.CENTER);
-        seatGrid.setHgap(8);
-        seatGrid.setVgap(8);
-        seatGrid.setPadding(new Insets(15));
-        seatGrid.setStyle("-fx-background-color: #ecf0f1; -fx-background-radius: 10;");
-
-        Set<String> bookedSeats = getBookedSeats(selectedMovie, selectedDate, selectedSchedule);
-
-        for (int i = 0; i < SEAT_ROWS.length; i++) {
-            Label rowLabel = new Label(SEAT_ROWS[i]);
-            rowLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2c3e50;");
-            seatGrid.add(rowLabel, 0, i);
-
-            for (int j = 1; j <= SEATS_PER_ROW; j++) {
-                String seatId = SEAT_ROWS[i] + j;
-                Button seatBtn = createSeatButton(seatId, j, bookedSeats);
-                seatGrid.add(seatBtn, j, i);
-            }
-        }
-
-        return seatGrid;
-    }
-
-    private Button createSeatButton(String seatId, int seatNumber, Set<String> bookedSeats) {
-    Button seatBtn = new Button(String.valueOf(seatNumber));
-    seatBtn.setUserData(seatId);
-    seatBtn.setPrefSize(35, 35);
-    seatBtn.setMinSize(35, 35);
-    seatBtn.setMaxSize(35, 35);
-
-    if (bookedSeats.contains(seatId)) {
-        seatBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; " +
-                    "-fx-font-weight: bold; -fx-background-radius: 5; " +
-                    "-fx-border-color: #c0392b; -fx-border-width: 2; -fx-border-radius: 5;");
-        seatBtn.setDisable(true);
-        seatBtn.setText("X");
-    } else if (selectedSeats.contains(seatId)) {
-        seatBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; " +
-                    "-fx-font-weight: bold; -fx-background-radius: 5; " +
-                    "-fx-border-color: #2980b9; -fx-border-width: 2; -fx-border-radius: 5;");
-        seatBtn.setOnAction(e -> toggleSeat(seatBtn, seatId, bookedSeats));
-    } else {
-        seatBtn.setStyle("-fx-background-color: #ecf0f1; -fx-text-fill: #2c3e50; " +
-                    "-fx-font-weight: bold; -fx-background-radius: 5; " +
-                    "-fx-border-color: #bdc3c7; -fx-border-width: 2; -fx-border-radius: 5;");
-        seatBtn.setOnAction(e -> toggleSeat(seatBtn, seatId, bookedSeats));
-    }
-
-    return seatBtn;
-}
-
-private void toggleSeat(Button seatBtn, String seatId, Set<String> bookedSeats) {
-    if (bookedSeats.contains(seatId)) {
-        return;
-    }
-    
-    if (selectedSeats.contains(seatId)) {
-        selectedSeats.remove(seatId);
-        seatBtn.setStyle("-fx-background-color: #ecf0f1; -fx-text-fill: #2c3e50; " +
-                    "-fx-font-weight: bold; -fx-background-radius: 5; " +
-                    "-fx-border-color: #bdc3c7; -fx-border-width: 2; -fx-border-radius: 5;");
-    } else {
-        selectedSeats.add(seatId);
-        seatBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; " +
-                    "-fx-font-weight: bold; -fx-background-radius: 5; " +
-                    "-fx-border-color: #2980b9; -fx-border-width: 2; -fx-border-radius: 5;");
-    }
-    
-    updateSelectedSeatsDisplay();
-}
-
-    private void updateSelectedSeatsDisplay() {
-        System.out.println("Selected seats: " + 
-            (selectedSeats.isEmpty() ? "None" : String.join(", ", selectedSeats)));
-    }
-
-    private HBox createSeatNavigationButtons() {
-        Button nextBtn = createStyledButton("NEXT: SELECT SNACKS", "#3498db");
-        nextBtn.setPrefWidth(180);
-        nextBtn.setOnAction(e -> {
-            if (!selectedSeats.isEmpty()) {
-                if (snackController != null) {
-                    snackController.showSnackSelection();
-                } else {
-                    mainApp.showAlert("Error", "SnackController not set!");
-                }
-            } else {
-                mainApp.showAlert("Error", "Please select at least one seat");
-            }
-        });
-
-        Button backBtn = createStyledButton("← BACK", "#95a5a6");
-        backBtn.setPrefWidth(180);
-        backBtn.setOnAction(e -> showMovieDetail(selectedMovie));
-
-        HBox buttonBox = new HBox(10);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(backBtn, nextBtn);
-        
-        return buttonBox;
     }
 
     private HBox createInfoRow(String label, String value) {
