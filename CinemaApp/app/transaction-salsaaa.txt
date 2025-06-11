@@ -1,0 +1,27 @@
+|======= TICKET PURCHASE TRANSACTION =======|
+Date           : 2025-06-09 10:56:43
+User           : Nabila
+Ticket ID      : TKT1749437803517
+Amount         : Rp 50.000
+New Balance    : Rp 950.000
+Status         : SUCCESS
+|==========================================|
+
+|======= TICKET PURCHASE TRANSACTION =======|
+Date           : 2025-06-09 11:04:48
+User           : Nabila
+Ticket ID      : TKT1749438288506
+Amount         : Rp 50.000
+New Balance    : Rp 900.000
+Status         : SUCCESS
+|==========================================|
+
+|======= TICKET PURCHASE TRANSACTION =======|
+Date           : 2025-06-09 11:10:33
+User           : Nabila
+Ticket ID      : TKT1749438633840
+Amount         : Rp 50.000
+New Balance    : Rp 850.000
+Status         : SUCCESS
+|==========================================|
+

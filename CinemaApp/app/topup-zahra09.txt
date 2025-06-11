@@ -1,0 +1,40 @@
+|======== TOP-UP TRANSACTION ========|
+Date           : 2025-06-11 08:53:06
+User           : Zahra
+Amount         : Rp 100.000
+Payment Method : 💳 Credit Card
+Balance Before : Rp 0
+Balance After  : Rp 100.000
+Status         : SUCCESS
+|====================================|
+
+|======== TOP-UP TRANSACTION ========|
+Date           : 2025-06-11 12:33:26
+User           : Zahra
+Amount         : Rp 50.000
+Payment Method : 🏦 Bank Transfer
+Balance Before : Rp 35.000
+Balance After  : Rp 85.000
+Status         : SUCCESS
+|====================================|
+
+|======== TOP-UP TRANSACTION ========|
+Date           : 2025-06-11 12:49:37
+User           : Zahra
+Amount         : Rp 200.000
+Payment Method : 💳 Credit Card
+Balance Before : Rp 35.000
+Balance After  : Rp 235.000
+Status         : SUCCESS
+|====================================|
+
+|======== TOP-UP TRANSACTION ========|
+Date           : 2025-06-11 13:08:51
+User           : Zahra
+Amount         : Rp 200.000
+Payment Method : 💳 Debit Card
+Balance Before : Rp 35.000
+Balance After  : Rp 235.000
+Status         : SUCCESS
+|====================================|
+
