@@ -31,8 +31,8 @@ public class PaymentController {
     private Stage primaryStage;
     private User currentUser;
     private SnackController snackController;
-    private int ticketQuantity = 1; // default 1 tiket
-    private double ticketPricePerUnit = 50000; // Harga per tiket
+    private int ticketQuantity = 1;
+    private double ticketPricePerUnit = 50000; 
 
     public PaymentController(Main mainApp, User currentUser, BookingController bookingController) {
         this.mainApp = mainApp;
@@ -252,7 +252,7 @@ public class PaymentController {
 
         RadioButton customRadio = new RadioButton("Custom Amount:");
         customRadio.setToggleGroup(amountGroup);
-        customRadio.setUserData(-1.0); // Special value for custom
+        customRadio.setUserData(-1.0); 
         customRadio.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
 
         TextField customAmountField = new TextField();

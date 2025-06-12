@@ -19,7 +19,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import finalLab.Service.playTrailer;
 import java.net.URL;
 
 public class BookingController {
@@ -51,10 +50,54 @@ public class BookingController {
         this.primaryStage = mainApp.getPrimaryStage();
         this.currentUser = Objects.requireNonNull(currentUser, "Current user cannot be null");
         this.movieService = mainApp.getMovieService();
-        
-        // Initialize SeatBookingController
         this.seatBookingController = new SeatBookingController(mainApp, currentUser, this);
     }
+
+    public Movie getSelectedMovie() { return selectedMovie; }
+    public String getSelectedDate() { return selectedDate; }
+    public String getSelectedSchedule() { return selectedSchedule; }
+    public Set<String> getSelectedSeats() { return new HashSet<>(selectedSeats); }
+    public List<SnackItem> getSelectedSnacks() { return new ArrayList<>(selectedSnacks); }
+    public User getCurrentUser() { return currentUser; }
+    public Stage getPrimaryStage() { return primaryStage; }
+    public String getCurrentTicketId() { return currentTicketId; }
+    public String getCurrentTicketText() { return currentTicketText; }
+    public String getPaymentMethod() { return paymentMethod; }
+    public boolean isPaymentCompleted() { return paymentCompleted; }
+    private String getAgeRating(Movie movie) {
+        String genre = movie.getGenre().toLowerCase();
+        if (genre.contains("horor")) return "17+";
+        if (genre.contains("thriller")) return "18+";
+        if (genre.contains("fantasy")) return "15+";
+        if (genre.contains("romance")) return "12+";
+        if (genre.contains("action")) return "13+";
+        return "SU";
+    }
+
+    private void setScene(VBox root, int width, int height) {
+        Scene scene = new Scene(root, width, height);
+        primaryStage.setScene(scene);
+    }
+
+    public void setSnackController(SnackController snackController) {
+        this.snackController = snackController;
+        if (seatBookingController != null) {
+            seatBookingController.setSnackController(snackController);
+        }
+    }
+
+    public void setSelectedSeats(Set<String> seats) {
+        this.selectedSeats = seats != null ? new HashSet<>(seats) : new HashSet<>();
+    }
+
+    public void setSelectedSnacks(List<SnackItem> snacks) {
+        this.selectedSnacks = snacks != null ? new ArrayList<>(snacks) : new ArrayList<>();
+    }
+
+    public void setCurrentTicketId(String ticketId) { this.currentTicketId = ticketId; }
+    public void setCurrentTicketText(String ticketText) { this.currentTicketText = ticketText; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+    public void setPaymentCompleted(boolean completed) { this.paymentCompleted = completed; }
 
     public void showMoviesList() {
         try {
@@ -108,53 +151,16 @@ public class BookingController {
         if (!validateSelection()) {
             return;
         }
-        // Delegate to SeatBookingController
         seatBookingController.showSeatSelection(selectedMovie, selectedDate, selectedSchedule);
     }
 
-    // Getters
-    public Movie getSelectedMovie() { return selectedMovie; }
-    public String getSelectedDate() { return selectedDate; }
-    public String getSelectedSchedule() { return selectedSchedule; }
-    public Set<String> getSelectedSeats() { return new HashSet<>(selectedSeats); }
-    public List<SnackItem> getSelectedSnacks() { return new ArrayList<>(selectedSnacks); }
-    public User getCurrentUser() { return currentUser; }
-    public Stage getPrimaryStage() { return primaryStage; }
-    public String getCurrentTicketId() { return currentTicketId; }
-    public String getCurrentTicketText() { return currentTicketText; }
-    public String getPaymentMethod() { return paymentMethod; }
-    public boolean isPaymentCompleted() { return paymentCompleted; }
-
-    // Setters
-    public void setSnackController(SnackController snackController) {
-        this.snackController = snackController;
-        // Also set it for SeatBookingController
-        if (seatBookingController != null) {
-            seatBookingController.setSnackController(snackController);
-        }
-    }
-
-    public void setSelectedSeats(Set<String> seats) {
-        this.selectedSeats = seats != null ? new HashSet<>(seats) : new HashSet<>();
-    }
-
-    public void setSelectedSnacks(List<SnackItem> snacks) {
-        this.selectedSnacks = snacks != null ? new ArrayList<>(snacks) : new ArrayList<>();
-    }
 
     public void updateUserBalance(double newBalance) {
         currentUser.setBalance(newBalance);
     }
 
-    public void setCurrentTicketId(String ticketId) { this.currentTicketId = ticketId; }
-    public void setCurrentTicketText(String ticketText) { this.currentTicketText = ticketText; }
-    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
-    public void setPaymentCompleted(boolean completed) { this.paymentCompleted = completed; }
 
-    // Public method for SeatBookingController to access
     public void confirmSeatBooking() {
-        // This method can be called by SeatBookingController when seats are confirmed
-        // Implementation moved to SeatBookingController but can be called from here if needed
         if (seatBookingController != null) {
             seatBookingController.confirmSeatBooking();
         }
@@ -268,23 +274,22 @@ public class BookingController {
             StackPane.setAlignment(badgeArea, Pos.TOP_LEFT);
             posterStack.getChildren().add(badgeArea);
 
-            // Tombol trailer di bagian bawah poster (overlay)
             String trailerPath = getTrailerPath(movie.getTitle());
             if (trailerPath != null) {
                 Button trailerBtn = new Button("▶ Trailer");
                 trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; " +
-                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                                  "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;");
+                                "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;");
                 
                 trailerBtn.setOnMouseEntered(e -> 
                     trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.9); -fx-text-fill: white; " +
-                                      "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                                      "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
+                                    "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                    "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
                 
                 trailerBtn.setOnMouseExited(e -> 
                     trailerBtn.setStyle("-fx-background-color: rgba(0,0,0,0.8); -fx-text-fill: white; " +
-                                      "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                                      "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
+                                    "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                    "-fx-padding: 6 12; -fx-font-size: 10px; -fx-cursor: hand;"));
                 
                 trailerBtn.setOnAction(e -> {
                     try {
@@ -314,14 +319,10 @@ public class BookingController {
 
     private void createFallbackPoster(VBox posterArea, Movie movie) {
         posterArea.setStyle("-fx-background-color: #ff6b6b; -fx-background-radius: 12;");
-
-        // BAGIAN: Badge Usia
         HBox badgeArea = createAgeRatingBadge(movie);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        // BAGIAN: Judul Film
         VBox titleArea = new VBox();
         titleArea.setAlignment(Pos.CENTER);
         titleArea.setPadding(new Insets(15));
@@ -339,19 +340,18 @@ public class BookingController {
         if (trailerPath != null) {
             Button trailerBtn = new Button("Lihat Trailer");
             trailerBtn.setStyle("-fx-background-color: white; -fx-text-fill: #ff6b6b; " +
-                              "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                              "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;");
+                            "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                            "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;");
             
-            // Hover effect untuk tombol trailer
             trailerBtn.setOnMouseEntered(e -> 
                 trailerBtn.setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: #ff6b6b; " +
-                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                                  "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
+                                "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
             
             trailerBtn.setOnMouseExited(e -> 
                 trailerBtn.setStyle("-fx-background-color: white; -fx-text-fill: #ff6b6b; " +
-                                  "-fx-font-weight: bold; -fx-background-radius: 15; " +
-                                  "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
+                                "-fx-font-weight: bold; -fx-background-radius: 15; " +
+                                "-fx-padding: 8 16; -fx-font-size: 11px; -fx-cursor: hand;"));
             
             trailerBtn.setOnAction(e -> {
                 try {
@@ -366,7 +366,6 @@ public class BookingController {
             
             trailerArea.getChildren().add(trailerBtn);
         } else {
-            // Jika tidak ada trailer, tampilkan label info
             Label noTrailerLabel = new Label("Trailer tidak tersedia");
             noTrailerLabel.setStyle("-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 10px;");
             trailerArea.getChildren().add(noTrailerLabel);
@@ -444,7 +443,6 @@ public class BookingController {
             System.out.println("Found trailer mapping for: " + movieTitle + " -> " + resourcePath);
             
             try {
-                // Coba mendapatkan URL dari resource
                 URL resourceUrl = getClass().getResource(resourcePath);
                 if (resourceUrl != null) {
                     String validUri = resourceUrl.toExternalForm();
@@ -452,9 +450,7 @@ public class BookingController {
                     return validUri;
                 } else {
                     System.err.println("✗ Trailer file not found in resources: " + resourcePath);
-                    
-                    // Coba alternatif path tanpa leading slash
-                    String alternativePath = resourcePath.substring(1); // Remove leading "/"
+                    String alternativePath = resourcePath.substring(1);
                     URL altUrl = getClass().getResource("/" + alternativePath);
                     if (altUrl != null) {
                         String validUri = altUrl.toExternalForm();
@@ -635,8 +631,7 @@ public class BookingController {
 
     private void selectDate(VBox selectedCard, LocalDate date) {
         HBox parent = (HBox) selectedCard.getParent();
-        
-        // Reset all date cards
+
         parent.getChildren().forEach(node -> {
             if (node instanceof VBox vbox) {
                 resetDateCardStyle(vbox);
@@ -701,8 +696,7 @@ public class BookingController {
 
     private void selectTime(HBox timeSlots, Button selectedBtn, String schedule) {
         selectedSchedule = schedule;
-        
-        // Reset all buttons
+
         timeSlots.getChildren().forEach(node -> {
             if (node instanceof Button btn) {
                 btn.setStyle("-fx-background-color: #f0f0f0; -fx-text-fill: #333; " +
@@ -744,15 +738,5 @@ public class BookingController {
         return label;
     }
 
-    private String getAgeRating(Movie movie) {
-        String genre = movie.getGenre().toLowerCase();
-        if (genre.contains("horror")) return "17+";
-        if (genre.contains("action")) return "13+";
-        return "SU";
-    }
-
-    private void setScene(VBox root, int width, int height) {
-        Scene scene = new Scene(root, width, height);
-        primaryStage.setScene(scene);
-    }
+    
 }

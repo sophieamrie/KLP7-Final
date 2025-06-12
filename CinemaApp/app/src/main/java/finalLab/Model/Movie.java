@@ -11,9 +11,6 @@ public class Movie {
     private String trailerPath;
     private String id;
 
-    
-    
-    
     public Movie(String title, String genre, int duration, List<String> schedules, String posterPath) {
         this.title = title;
         this.genre = genre;
@@ -76,13 +73,4 @@ public class Movie {
         this.trailerPath = trailerPath;
     }
     
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "title='" + title + '\'' +
-                ", genre='" + genre + '\'' +
-                ", duration=" + duration +
-                ", schedules=" + schedules +
-                '}';
-    }
 }

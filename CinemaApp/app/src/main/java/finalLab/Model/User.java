@@ -5,7 +5,6 @@ public class User {
     private String fullName;
     private String password;
     public double balance;
-
     private double eWalletBalance;
 
 
@@ -17,7 +16,6 @@ public class User {
     }
 
     public User() {
-
         this.username = "";
         this.fullName = "";
         this.password = "";

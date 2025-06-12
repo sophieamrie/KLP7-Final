@@ -28,11 +28,4 @@ public class Snack {
     public void setPrice(double price) {
         this.price = price;
     }
-    @Override
-    public String toString() {
-        return "Snack{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
-    }
 }

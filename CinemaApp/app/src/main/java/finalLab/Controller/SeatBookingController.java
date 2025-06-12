@@ -19,12 +19,8 @@ import javafx.stage.Stage;
 public class SeatBookingController {
     private static final String[] SEAT_ROWS = {"A", "B", "C", "D", "E"};
     private static final int SEATS_PER_ROW = 8;
-    
-    // Static map untuk menyimpan kursi yang sudah dibooking secara permanen
-    // Key: "movieTitle_date_schedule", Value: Set of booked seat IDs
     public static final Map<String, Set<String>> PERMANENTLY_BOOKED_SEATS = new HashMap<>();
 
-    
     private static final String PRIMARY_COLOR = "#2c3e50";
     private static final String SECONDARY_COLOR = "#34495e";
     private static final String SUCCESS_COLOR = "#4caf50";
@@ -52,14 +48,26 @@ public class SeatBookingController {
         this.primaryStage = mainApp.getPrimaryStage();
         this.currentUser = Objects.requireNonNull(currentUser, "Current user cannot be null");
         this.bookingController = Objects.requireNonNull(bookingController, "Booking controller cannot be null");
-        
-        // Debug info
         System.out.println("SeatBookingController initialized for user: " + currentUser.getUsername());
     }
 
     public void setSnackController(SnackController snackController) {
         this.snackController = snackController;
         System.out.println("SnackController set: " + (snackController != null));
+    }
+
+    private String getBookingKey(Movie movie, String date, String schedule) {
+        return movie.getTitle() + "_" + date + "_" + schedule;
+    }
+
+    private Set<String> getBookedSeats(String bookingKey) {
+        return PERMANENTLY_BOOKED_SEATS.getOrDefault(bookingKey, new HashSet<>());
+    }
+
+    private Set<String> getBookedSeats(Movie movie, String date, String schedule) {
+        String key = movie.getId() + "_" + selectedDate + "_" + selectedSchedule;
+
+        return getBookedSeats(key);
     }
 
     public void showSeatSelection(Movie movie, String date, String schedule) {
@@ -90,7 +98,6 @@ public class SeatBookingController {
                 "14px", "white", false
             );
 
-            // --- Seat Grid ---
             GridPane seatGrid = new GridPane();
             seatGrid.setAlignment(Pos.CENTER);
             seatGrid.setHgap(8);
@@ -133,7 +140,6 @@ public class SeatBookingController {
                 }
             }
 
-            // --- Selected seats label & navigation buttons ---
             selectedSeatsDisplayLabel = createStyledLabel("Selected seats: None", "14px", PRIMARY_COLOR, true);
             HBox buttonBox = createSeatNavigationButtons();
 
@@ -172,10 +178,6 @@ public class SeatBookingController {
         }
     }
 
-    /**
-     * Konfirmasi booking kursi - menandai kursi sebagai permanently booked
-     * Method ini dipanggil ketika user menyelesaikan proses pembayaran
-     */
     public void confirmSeatBooking() {
         System.out.println("=== CONFIRMING SEAT BOOKING ===");
         
@@ -191,7 +193,6 @@ public class SeatBookingController {
         String bookingKey = getBookingKey(selectedMovie, selectedDate, selectedSchedule);
         Set<String> currentlyBooked = PERMANENTLY_BOOKED_SEATS.computeIfAbsent(bookingKey, k -> new HashSet<>());
         
-        // Double check: pastikan kursi yang dipilih masih available
         for (String seat : selectedSeats) {
             if (currentlyBooked.contains(seat)) {
                 Platform.runLater(() -> {
@@ -202,28 +203,20 @@ public class SeatBookingController {
             }
         }
         
-        // Tambahkan kursi ke permanently booked
         currentlyBooked.addAll(selectedSeats);
         
         System.out.println("Seats confirmed as booked: " + selectedSeats + 
-                          " for " + selectedMovie.getTitle() + " on " + selectedDate + " at " + selectedSchedule);
+                        " for " + selectedMovie.getTitle() + " on " + selectedDate + " at " + selectedSchedule);
         
-        // Clear selected seats after booking
         selectedSeats.clear();
         
         return;
     }
 
-    /**
-     * Mendapatkan kursi yang sedang dipilih user (belum di-confirm)
-     */
     public Set<String> getSelectedSeats() {
         return new HashSet<>(selectedSeats);
     }
 
-    /**
-     * Set kursi yang dipilih (untuk keperluan testing atau restore state)
-     */
     public void setSelectedSeats(Set<String> seats) {
         System.out.println("Setting selected seats: " + seats);
         
@@ -231,8 +224,7 @@ public class SeatBookingController {
             this.selectedSeats = new HashSet<>();
             return;
         }
-        
-        // Validasi bahwa kursi yang di-set masih available
+
         if (selectedMovie != null && selectedDate != null && selectedSchedule != null) {
             String bookingKey = getBookingKey(selectedMovie, selectedDate, selectedSchedule);
             Set<String> bookedSeats = getBookedSeats(bookingKey);
@@ -249,7 +241,6 @@ public class SeatBookingController {
             this.selectedSeats = new HashSet<>(seats);
         }
         
-        // Update display jika sudah ada UI
         Platform.runLater(() -> {
             if (selectedSeatsDisplayLabel != null) {
                 updateSelectedSeatsDisplay();
@@ -260,9 +251,6 @@ public class SeatBookingController {
         });
     }
 
-    /**
-     * Clear semua kursi yang dipilih
-     */
     public void clearSelectedSeats() {
         this.selectedSeats.clear();
         Platform.runLater(() -> {
@@ -275,9 +263,7 @@ public class SeatBookingController {
         });
     }
 
-    /**
-     * Cek apakah kursi tersedia untuk dipilih
-     */
+
     public boolean isSeatAvailable(String seatId) {
         if (selectedMovie == null || selectedDate == null || selectedSchedule == null) {
             return false;
@@ -310,20 +296,6 @@ public class SeatBookingController {
         Platform.runLater(() -> {
             mainApp.showAlert("Error", message + ". Please try again.");
         });
-    }
-
-    private String getBookingKey(Movie movie, String date, String schedule) {
-        return movie.getTitle() + "_" + date + "_" + schedule;
-    }
-
-    private Set<String> getBookedSeats(String bookingKey) {
-        return PERMANENTLY_BOOKED_SEATS.getOrDefault(bookingKey, new HashSet<>());
-    }
-
-    private Set<String> getBookedSeats(Movie movie, String date, String schedule) {
-        String key = movie.getId() + "_" + selectedDate + "_" + selectedSchedule;
-
-        return getBookedSeats(key);
     }
 
     private VBox createBaseLayout() {
@@ -408,20 +380,17 @@ public class SeatBookingController {
         seatBtn.setMinSize(35, 35);
         seatBtn.setMaxSize(35, 35);
 
-        // PENTING: Kursi yang sudah di-book TIDAK BISA dipilih sama sekali
         if (bookedSeats.contains(seatId)) {
     seatBtn.setStyle("-fx-background-color: " + BOOKED_COLOR);
     seatBtn.setDisable(true);
     seatBtn.setText("X");
-    seatBtn.setOnAction(null); // Remove any action
+    seatBtn.setOnAction(null); 
 } else if (selectedSeats.contains(seatId)) {
-            // Kursi dipilih user: tampil biru, bisa diklik untuk unselect
             seatBtn.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: white; " +
                         "-fx-font-weight: bold; -fx-background-radius: 5; " +
                         "-fx-border-color: #2980b9; -fx-border-width: 2; -fx-border-radius: 5;", SELECTED_COLOR));
             seatBtn.setOnAction(e -> handleSeatClick(seatBtn, seatId));
         } else {
-            // Kursi available: tampil abu-abu, bisa diklik untuk select
             seatBtn.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: #2c3e50; " +
                         "-fx-font-weight: bold; -fx-background-radius: 5; " +
                         "-fx-border-color: #bdc3c7; -fx-border-width: 2; -fx-border-radius: 5;", AVAILABLE_COLOR));
@@ -434,12 +403,10 @@ public class SeatBookingController {
     private void handleSeatClick(Button seatBtn, String seatId) {
         System.out.println("Seat clicked: " + seatId);
         
-        // Double check: pastikan kursi masih available
         String bookingKey = getBookingKey(selectedMovie, selectedDate, selectedSchedule);
         Set<String> currentlyBooked = getBookedSeats(bookingKey);
         
         if (currentlyBooked.contains(seatId)) {
-            // Kursi sudah di-book oleh orang lain, refresh grid
             Platform.runLater(() -> {
                 mainApp.showAlert("Seat Unavailable", "This seat has been booked by another user.");
                 refreshSeatGrid();
@@ -452,14 +419,12 @@ public class SeatBookingController {
 
     private void toggleSeat(Button seatBtn, String seatId) {
         if (selectedSeats.contains(seatId)) {
-            // Unselect seat
             selectedSeats.remove(seatId);
             seatBtn.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: #2c3e50; " +
                         "-fx-font-weight: bold; -fx-background-radius: 5; " +
                         "-fx-border-color: #bdc3c7; -fx-border-width: 2; -fx-border-radius: 5;", AVAILABLE_COLOR));
             System.out.println("Seat " + seatId + " unselected");
         } else {
-            // Select seat
             selectedSeats.add(seatId);
             seatBtn.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: white; " +
                         "-fx-font-weight: bold; -fx-background-radius: 5; " +
@@ -510,10 +475,9 @@ public class SeatBookingController {
             System.out.println("Next button clicked, selected seats: " + selectedSeats);
             
             if (!selectedSeats.isEmpty()) {
-                // Validasi sekali lagi sebelum melanjutkan
                 String bookingKey = getBookingKey(selectedMovie, selectedDate, selectedSchedule);
                 Set<String> currentlyBooked = getBookedSeats(bookingKey);
-                
+
                 boolean hasConflict = false;
                 for (String seat : selectedSeats) {
                     if (currentlyBooked.contains(seat)) {
@@ -521,39 +485,38 @@ public class SeatBookingController {
                         break;
                     }
                 }
-                
+
                 if (hasConflict) {
-                    mainApp.showAlert("Seat Conflict", "Some selected seats are no longer available. Please refresh and select again.");
+                    mainApp.showAlert("Seat Conflict",
+                            "Some selected seats are no longer available. Please refresh and select again.");
                     refreshSeatGrid();
                     return;
                 }
-                
-                // Set selected seats to booking controller
-                try {
-                    bookingController.setSelectedSeats(selectedSeats);
-                    System.out.println("Selected seats passed to BookingController");
-                } catch (Exception ex) {
-                    System.err.println("Error setting selected seats to BookingController: " + ex.getMessage());
-                    ex.printStackTrace();
-                }
-                
-                // Navigate to snack selection
-                if (snackController != null) {
+
                     try {
-                        snackController.showSnackSelection();
-                        System.out.println("Navigated to snack selection");
+                        bookingController.setSelectedSeats(selectedSeats);
+                        System.out.println("Selected seats passed to BookingController");
                     } catch (Exception ex) {
-                        System.err.println("Error showing snack selection: " + ex.getMessage());
+                        System.err.println("Error setting selected seats to BookingController: " + ex.getMessage());
                         ex.printStackTrace();
-                        mainApp.showAlert("Error", "Failed to show snack selection: " + ex.getMessage());
+                    }
+
+                    if (snackController != null) {
+                        try {
+                            snackController.showSnackSelection();
+                            System.out.println("Navigated to snack selection");
+                        } catch (Exception ex) {
+                            System.err.println("Error showing snack selection: " + ex.getMessage());
+                            ex.printStackTrace();
+                            mainApp.showAlert("Error", "Failed to show snack selection: " + ex.getMessage());
+                        }
+                    } else {
+                        System.err.println("SnackController is null!");
+                        mainApp.showAlert("Error", "SnackController not set!");
                     }
                 } else {
-                    System.err.println("SnackController is null!");
-                    mainApp.showAlert("Error", "SnackController not set!");
+                    mainApp.showAlert("Error", "Please select at least one seat");
                 }
-            } else {
-                mainApp.showAlert("Error", "Please select at least one seat");
-            }
         });
 
         Button backBtn = createStyledButton("← BACK", NEUTRAL_COLOR);
@@ -597,21 +560,6 @@ public class SeatBookingController {
         System.out.println("Scene set successfully");
     }
 
-    // ========== PUBLIC UTILITY METHODS ==========
-
-    /**
-     * Method untuk menambahkan logika booking seats tambahan
-     */
-    public void addCustomSeatLogic() {
-        // Tempat untuk menambahkan logika khusus booking seats
-        // Misalnya: validasi khusus, perhitungan harga berdasarkan posisi kursi, dll.
-        System.out.println("Custom seat logic can be added here");
-    }
-
-    /**
-     * Method untuk mendapatkan semua kursi yang sudah dibooking
-     * HANYA untuk read-only purposes
-     */
     public Map<String, Set<String>> getAllBookedSeats() {
         Map<String, Set<String>> copy = new HashMap<>();
         for (Map.Entry<String, Set<String>> entry : PERMANENTLY_BOOKED_SEATS.entrySet()) {
@@ -620,32 +568,18 @@ public class SeatBookingController {
         return copy;
     }
 
-    /**
-     * Method untuk reset booking seats - HANYA untuk testing
-     */
-    public void resetBookedSeats() {
-        PERMANENTLY_BOOKED_SEATS.clear();
-        System.out.println("All booked seats have been reset");
-    }
 
-    /**
-     * Method untuk menambahkan seats yang sudah dibooking secara manual
-     * Berguna untuk testing atau import data
-     */
     public void addBookedSeats(Movie movie, String date, String schedule, Set<String> seats) {
         if (movie == null || date == null || schedule == null || seats == null) {
             System.err.println("Cannot add booked seats: invalid parameters");
             return;
         }
         
-// key = movieId_date_schedule
 String key = movie.getId() + "_" + selectedDate + "_" + selectedSchedule;
 Set<String> bookedSeats = PERMANENTLY_BOOKED_SEATS.getOrDefault(key, new HashSet<>());
 bookedSeats.addAll(selectedSeats);
 PERMANENTLY_BOOKED_SEATS.put(key, bookedSeats);
 
-        
-        // Refresh UI jika sedang menampilkan screening yang sama
         if (Objects.equals(this.selectedMovie, movie) && 
             Objects.equals(this.selectedDate, date) && 
             Objects.equals(this.selectedSchedule, schedule) && 
@@ -654,9 +588,6 @@ PERMANENTLY_BOOKED_SEATS.put(key, bookedSeats);
         }
     }
 
-    /**
-     * Get available seats untuk screening tertentu
-     */
     public Set<String> getAvailableSeats(Movie movie, String date, String schedule) {
         Set<String> allSeats = new HashSet<>();
         for (String row : SEAT_ROWS) {
@@ -671,9 +602,6 @@ PERMANENTLY_BOOKED_SEATS.put(key, bookedSeats);
         return allSeats;
     }
 
-    /**
-     * Get booking statistics
-     */
     public void printBookingStats() {
         System.out.println("=== BOOKING STATISTICS ===");
         if (PERMANENTLY_BOOKED_SEATS.isEmpty()) {
