@@ -157,7 +157,10 @@ PeTik/
 
 ![Tampilan Aplikasi](Dokumentasi/snack.png)
 
-*4. Top saldo*
+*4. Tampilan tiket*
+![Tampilan Aplikasi](Dokumentasi/tiket.png)
+
+*5. Top saldo*
 ![Tampilan Aplikasi](Dokumentasi/topup.png)
 
 ---
