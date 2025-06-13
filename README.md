@@ -3,7 +3,7 @@
 </h1> 
     <p align="center"> 
         <b> 
-        Pemesanan Tiket
+        Aplikasi Pemesanan Tiket Bioskop
         </b> 
     </p>
 
@@ -120,12 +120,14 @@
     - Melakukan pembayaran dengan saldo
     - Top up saldo jika diperlukan
 
+---
+
 ## 👥 Kontributor
 
 **KELOMPOK 19**
-o Andi Sophie Banuna Amrie
-o Andi Eryn Nur Alisya
-o Nabila Salsabila
+- Andi Sophie Banuna Amrie
+- Andi Eryn Nur Alisya
+- Nabila Salsabila
 
 <a href="https://github.com/sophieamrie/KLP7-FINAL/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=sophieamrie/KLP7-FINAL" />
