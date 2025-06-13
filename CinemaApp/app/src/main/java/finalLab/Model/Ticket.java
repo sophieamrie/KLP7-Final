@@ -1,72 +1,60 @@
 package finalLab.Model;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class Ticket {
     private String ticketId;
-    private String username;
+    private String customerName;
     private String movieTitle;
-    private String date;
-    private String schedule;
-    private String seat;
-    private List<SnackItem> snacks;
+    private LocalDate showDate;
+    private String showTime;
+    private List<String> seats;
+    private Map<String, Integer> snacks;
+    private int totalAmount;
 
-    public Ticket() {
+    public Ticket(String ticketId, String customerName, String movieTitle, LocalDate showDate,
+            String showTime, List<String> seats, Map<String, Integer> snacks, int totalAmount) {
+        this.ticketId = ticketId;
+        this.customerName = customerName;
+        this.movieTitle = movieTitle;
+        this.showDate = showDate;
+        this.showTime = showTime;
+        this.seats = seats;
+        this.snacks = snacks;
+        this.totalAmount = totalAmount;
     }
 
     public String getTicketId() {
         return ticketId;
     }
 
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public String getCustomerName() {
+        return customerName;
     }
 
     public String getMovieTitle() {
         return movieTitle;
     }
 
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
+    public LocalDate getShowDate() {
+        return showDate;
     }
 
-    public String getDate() {
-        return date;
+    public String getShowTime() {
+        return showTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public List<String> getSeats() {
+        return seats;
     }
 
-    public String getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getSeat() {
-        return seat;
-    }
-
-    public void setSeat(String seat) {
-        this.seat = seat;
-    }
-
-    public List<SnackItem> getSnacks() {
+    public Map<String, Integer> getSnacks() {
         return snacks;
     }
 
-    public void setSnacks(List<SnackItem> snacks) {
-        this.snacks = snacks;
+    public int getTotalAmount() {
+        return totalAmount;
     }
 }
