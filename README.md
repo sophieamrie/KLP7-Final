@@ -30,7 +30,7 @@ PETIK atau Pemesanan Tiket merupakan aplikasi yang dibangun menggunakan JavaFX s
 PeTik/
 ├──app/
 |   ├──src/
-|   |   ├──main /
+|   |   ├──main/
 |   |   |   ├──java/
 |   |   |   |    ├──finalLab/
 |   |   |   |           ├──Controller/   # Folder yang berisi tampilan GUI 
@@ -43,6 +43,7 @@ PeTik/
 |   |   |          ├──trailers/
 ├──Dokumentasi/
 ├──README.md
+├──.vscode/
 ```
 
 ---
