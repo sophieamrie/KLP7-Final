@@ -17,6 +17,14 @@ CinemaApp merupakan aplikasi yang dibangun menggunakan JavaFX sebagai bagian dar
 
 ## Penerapan Pillar OOP
 
+| **Konsep**        | **Implementasi**                                                                                                                                                                                                     |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Encapsulation** | Atribut seperti `username`, `fullname`, dan `balance` di kelas `User` bersifat `private`, hanya bisa diakses lewat getter/setter untuk menjaga data tetap aman dan konsisten.                                        |
+| **Abstraction**   | Proses seperti pembayaran dan booking dikemas dalam class seperti `PaymentController` dan `BookingController`, sehingga kita hanya perlu pakai method seperti `showTopUpScreen()` tanpa tahu detail internalnya.     |
+| **Inheritance**   | Kelas `Main` mewarisi `Application` dari JavaFX untuk bisa menjalankan method `start()`. |
+| **Polymorphism**  | Method seperti `pay()` bisa punya perilaku berbeda tergantung jenis pembayaran. Semua controller juga punya method `show*Screen()` dengan nama serupa tapi tampilan dan fungsi yang berbeda.                         |
+
+
 ## 🛠️ Cara menjalankan projek
 
 1. Clone repository ini ke komputer Anda menggunakan Git:
