@@ -15,16 +15,55 @@ CinemaApp merupakan aplikasi yang dibangun menggunakan JavaFX sebagai bagian dar
 - **Pemilihan Snack**: Pengguna dapat menambahkan makanan atau minuman sebagai bagian dari pembelian tiket.
 - **Pengaturan Saldo Balance**: Pengguna dapat melihat dan mengatur saldo, termasuk fitur *top-up* untuk menambahkan dana sebelum melakukan transaksi.
 
-## Penerapan Pillar OOP
+## 🧩 Penerapan 4 Pilar OOP 
 
-| **Konsep**        | **Implementasi**                                                                                                                                                                                                     |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Encapsulation** | Atribut seperti `username`, `fullname`, dan `balance` di kelas `User` bersifat `private`, hanya bisa diakses lewat getter/setter untuk menjaga data tetap aman dan konsisten.                                        |
-| **Abstraction**   | Proses seperti pembayaran dan booking dikemas dalam class seperti `PaymentController` dan `BookingController`, sehingga kita hanya perlu pakai method seperti `showTopUpScreen()` tanpa tahu detail internalnya.     |
-| **Inheritance**   | Kelas `Main` mewarisi `Application` dari JavaFX untuk bisa menjalankan method `start()`. |
-| **Polymorphism**  | Method seperti `pay()` bisa punya perilaku berbeda tergantung jenis pembayaran. Semua controller juga punya method `show*Screen()` dengan nama serupa tapi tampilan dan fungsi yang berbeda.                         |
+### 1. Encapsulation (Enkapsulasi)
 
+**Tujuan**: Menyembunyikan detail implementasi dan hanya mengekspos yang dibutuhkan melalui method publik.
 
+### Diterapkan di:
+- **Model**:
+  - `User`, `Movie`, `Ticket`: Menggunakan `private` field dan `public getter/setter`.
+- **Service**:
+  - `UserManager`, `BookingManager`, dll: Menyediakan method publik untuk memanipulasi data pengguna, film, dan tiket tanpa mengekspos langsung detail struktur penyimpanan.
+
+---
+
+### 2. Inheritance (Pewarisan)
+
+**Tujuan**: Memungkinkan kelas untuk mewarisi atribut dan method dari kelas lain.
+
+### Diterapkan di:
+- **Controller**:
+  - Semua controller (`AuthController`, `BookingController`, `TopUpController`, dll) mewarisi dari `BaseController`, yang menyediakan method umum seperti `setScene` dan `showMessage`.
+- **Service**:
+  - `BaseFileService` digunakan sebagai kelas induk untuk `UserManager`, `MovieManager`, dan `BookingManager`, yang berbagi logika pemrosesan file dasar.
+
+---
+
+## 3. Polymorphism (Polimorfisme)
+
+**Tujuan**: Memungkinkan satu antarmuka digunakan untuk berbagai jenis objek.
+
+### Diterapkan di:
+- **Service**:
+  - `IFileService` sebagai interface untuk layanan berbasis file, yang diimplementasikan oleh beberapa kelas seperti `UserManager`, `MovieManager`, `BookingManager`. Ini memungkinkan pemanggilan method `readFromFile()` atau `writeToFile()` tanpa peduli jenis objek spesifik.
+- **Controller**:
+  - Polimorfisme melalui overriding method `show()` di berbagai controller yang diwarisi dari `BaseController`.
+
+---
+
+## 4. Abstraction (Abstraksi)
+
+**Tujuan**: Menyembunyikan kompleksitas dan hanya menampilkan fungsionalitas yang relevan kepada pengguna.
+
+### Diterapkan di:
+- **Controller**:
+  - Setiap controller menyederhanakan interaksi UI menjadi fungsi-fungsi seperti `showLoginForm`, `showTopUpScene`, dll, tanpa harus menunjukkan bagaimana JavaFX bekerja secara internal.
+- **Service**:
+  - `BaseFileService` dan interface `IFileService` menyembunyikan detail pembacaan/penulisan file dari controller atau model.
+
+---
 ## 🛠️ Cara menjalankan projek
 
 1. Clone repository ini ke komputer Anda menggunakan Git:
@@ -61,9 +100,11 @@ CinemaApp merupakan aplikasi yang dibangun menggunakan JavaFX sebagai bagian dar
     - Melakukan pembayaran dengan saldo
     - Top up saldo jika diperlukan
 
-## Struktur Direktori
-
-## Kontributor
+## 👥 Kontributor
 - Nabila Salsabila
 - Andi Sophie Banuna Amrie
 - Andi Eryn Nur Alisya
+
+
+
+
