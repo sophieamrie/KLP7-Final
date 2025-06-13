@@ -195,6 +195,7 @@ public class BookingController extends BaseController {
                 "-fx-text-alignment: center;");
         nameLabel.setWrapText(true);
         nameLabel.setMaxWidth(180);
+        nameLabel.setAlignment(Pos.CENTER); // Menambahkan alignment ke tengah
 
         Label genreLabel = new Label("🎭 " + movie.getGenre());
         genreLabel.setStyle("-fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-font-weight: bold;");

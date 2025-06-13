@@ -8,7 +8,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("🎬 Cinema Booking System");
+        primaryStage.setTitle("🎬 PeTik System");
         primaryStage.setResizable(false);
 
         AuthController authController = new AuthController(primaryStage);
