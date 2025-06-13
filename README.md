@@ -163,7 +163,7 @@ PeTik/
 *4. Tampilan tiket*
 ![Tampilan Aplikasi](Dokumentasi/tiket.png)
 
-*5. Top saldo*
+*5. Top-up saldo*
 ![Tampilan Aplikasi](Dokumentasi/topup.png)
 
 ---
