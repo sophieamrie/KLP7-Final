@@ -33,9 +33,9 @@ PeTik/
 |   |   ├──main 
 |   |   |   ├──java
 |   |   |   |    ├──finalLab
-|   |   |   |           ├──Controller   # Folder yang berisi
-|   |   |   |           ├──Model        #
-|   |   |   |           ├──Service      #
+|   |   |   |           ├──Controller   # Folder yang berisi tampilan GUI 
+|   |   |   |           ├──Model        # Folder yang berisi atribut utama & setter-getter
+|   |   |   |           ├──Service      # Folder yang berisi logika kode pemrograman
 |   |   |   |           ├──Main.java    # pintu masuk App
 |   |   |   |
 |   |   |   ├──resources
