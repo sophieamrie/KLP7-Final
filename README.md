@@ -1,9 +1,9 @@
 <h1 align="center"> 
-    🎬 PETIK 
+    🎬 PETIK - Pesan Tiket
 </h1> 
     <p align="center"> 
         <b> 
-        Pemesanan Tiket
+        Aplikasi Pemesanan Tiket Bioskop
         </b> 
     </p>
 
@@ -139,24 +139,35 @@ PeTik/
 ## 📸 Dokumentasi App
 
 *1. Register & Login*
+![Tampilan Aplikasi](Dokumentasi/login.png)
+
+![Tampilan Aplikasi](Dokumentasi/regist.png)
 
 *2. Menu Utama*
+![Tampilan Aplikasi](Dokumentasi/mainMenu.png)
 
 *3. Pilih film & waktu tayang, putar thriller, reservasi kursi dan pembelian snack*
+![Tampilan Aplikasi](Dokumentasi/pilihFilm.png)
 
-*4. Tampilan detail tiket*
+![Tampilan Aplikasi](Dokumentasi/trailler.png)
 
+![Tampilan Aplikasi](Dokumentasi/hari.png)
 
-*5. Top saldo*
+![Tampilan Aplikasi](Dokumentasi/jam.png)
+
+![Tampilan Aplikasi](Dokumentasi/snack.png)
+
+*4. Top saldo*
+![Tampilan Aplikasi](Dokumentasi/topup.png)
 
 ---
 
 ## 👥 Kontributor
 
 *KELOMPOK 19*
-o Andi Sophie Banuna Amrie
-o Andi Eryn Nur Alisya
-o Nabila Salsabila
+- Andi Sophie Banuna Amrie
+- Andi Eryn Nur Alisya
+- Nabila Salsabila
 
 <a href="https://github.com/sophieamrie/KLP7-FINAL/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=sophieamrie/KLP7-FINAL" />
