@@ -36,7 +36,7 @@ PeTik/
 |   |   |   |           ├──Controller/   # Folder yang berisi tampilan GUI 
 |   |   |   |           ├──Model/        # Folder yang berisi atribut utama & setter-getter
 |   |   |   |           ├──Service/      # Folder yang berisi logika kode pemrograman
-|   |   |   |           ├──Main.java    # pintu masuk App
+|   |   |   |           ├──Main.java     # pintu masuk App
 |   |   |   |
 |   |   |   ├──resources/
 |   |   |          ├──images/
